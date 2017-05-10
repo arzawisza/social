@@ -23,7 +23,7 @@ public class PostsRepository {
 
     @Transactional(SUPPORTS)
     public Optional<List<Post>> fetchUserPosts(String userName) {
-        return fetchPosts("SELECT p FROM Post p where p.user.name=:p_name", userName);
+        return fetchPosts("SELECT p FROM Post p join fetch p.user u where u.name=:p_name", userName);
     }
 
     @Transactional(SUPPORTS)
