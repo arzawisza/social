@@ -7,17 +7,20 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_MESSAGE_LENGTH;
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_TITLE_LENGTH;
+
 /**
  * Created by azawisza
  */
 public class AddPostRQ {
 
     @NotEmpty
-    @Size(max = 255, message = "Post title is too long")
+    @Size(max = MAX_TITLE_LENGTH, message = "Post title is too long")
     private String title;
 
     @NotEmpty(message = "Post text should not be empty")
-    @Size(max = Integer.MAX_VALUE, message = "Post text is too long")
+    @Size(max = MAX_MESSAGE_LENGTH, message = "Post text is too long")
     private String text;
 
     public String getTitle() {

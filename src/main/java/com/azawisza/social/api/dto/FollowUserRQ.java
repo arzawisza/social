@@ -8,14 +8,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_USERNAME_LENGTH;
+import static com.azawisza.social.configuration.ApplicationProperties.USERNAME_CONSTRAINT;
+
 /**
  * Created by azawisza
  */
 public class FollowUserRQ {
 
     @NotEmpty(message = "User name should not be empty")
-    @Size(max = 32, message = "User name is too long")
-    @Pattern(regexp = "^[a-z0-9_-]{3,32}$", message = "User name is not valid.")
+    @Size(max = MAX_USERNAME_LENGTH, message = "User name is too long")
+    @Pattern(regexp = USERNAME_CONSTRAINT, message = "User name is not valid.")
     private String userName;
 
     public String getUserName() {

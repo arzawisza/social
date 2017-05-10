@@ -7,11 +7,15 @@ import com.azawisza.social.domain.model.Post;
 
 import java.util.Date;
 
+import static java.util.stream.Stream.generate;
+
 /**
  * Created by azawisza
  */
 public class TestHelper {
 
+
+    public static  String tooLongTitle = generate(() -> "1").limit(41).reduce("", String::concat);
 
     public static PostDTO postDTO() {
         return new PostDTO()

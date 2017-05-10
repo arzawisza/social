@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_USERNAME_LENGTH;
+
 /**
  * Created by azawisza
  */
@@ -16,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long uid;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = MAX_USERNAME_LENGTH)
     private String name;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")

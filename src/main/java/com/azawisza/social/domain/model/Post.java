@@ -3,6 +3,9 @@ package com.azawisza.social.domain.model;
 import javax.persistence.*;
 import java.util.Date;
 
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_MESSAGE_LENGTH;
+import static com.azawisza.social.configuration.ApplicationProperties.MAX_TITLE_LENGTH;
+
 /**
  * Created by azawisza
  */
@@ -13,10 +16,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pid;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = MAX_TITLE_LENGTH)
     private String title;
 
-    @Column(length = Integer.MAX_VALUE)
+    @Column(length = MAX_MESSAGE_LENGTH)
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)

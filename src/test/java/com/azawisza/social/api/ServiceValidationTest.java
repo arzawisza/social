@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.azawisza.social.TestHelper.error;
-import static java.util.stream.Stream.generate;
+import static com.azawisza.social.TestHelper.tooLongTitle;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,7 +33,6 @@ public class ServiceValidationTest extends IntegrationTestBase {
     @Test
     public void shouldValidatePostTitleTooLong() throws Exception {
         //given
-        String tooLongTitle = generate(() -> "1").limit(300).reduce("", String::concat);
         String newPostForExistingUser = json(new AddPostRQ().withPostText("some text").withPostTitle(tooLongTitle));
         //when
         ResultActions perform = sendPost(newPostForExistingUser, "/user/user1/posts");
