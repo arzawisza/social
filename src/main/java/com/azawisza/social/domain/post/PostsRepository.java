@@ -23,13 +23,13 @@ public class PostsRepository {
 
     @Transactional(SUPPORTS)
     public Optional<List<Post>> fetchUserPosts(String userName) {
-        return fetchPosts("SELECT p FROM Post p where p.user.name=:p_name order by p.dateCreated", userName);
+        return fetchPosts("SELECT p FROM Post p where p.user.name=:p_name", userName);
     }
 
     @Transactional(SUPPORTS)
     public Optional<List<Post>> fetchPostsOfUsersFollowedByUser(String userName) {
         return fetchPosts("SELECT p FROM Post p where p.user.uid IN " +
-                "(select ft.followedId from Following ft, User u where ft.uid = u.uid AND u.name=:p_name) order by p.dateCreated", userName);
+                "(select ft.followedId from Following ft, User u where ft.uid = u.uid AND u.name=:p_name)", userName);
     }
 
     private Optional<List<Post>> fetchPosts(String qlString, String userName) {
