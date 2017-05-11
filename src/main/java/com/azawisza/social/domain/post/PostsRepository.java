@@ -28,7 +28,7 @@ public class PostsRepository {
 
     @Transactional(SUPPORTS)
     public Optional<List<Post>> fetchPostsOfUsersFollowedByUser(String userName) {
-        return fetchPosts("SELECT p FROM Post p where p.user.uid IN " +
+        return fetchPosts("SELECT p FROM Post p join fetch p.user u where u.uid IN " +
                 "(select ft.followedId from Following ft, User u where ft.uid = u.uid AND u.name=:p_name)", userName);
     }
 

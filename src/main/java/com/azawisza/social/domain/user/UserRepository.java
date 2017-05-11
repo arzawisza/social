@@ -1,6 +1,8 @@
 package com.azawisza.social.domain.user;
 
 import com.azawisza.social.domain.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,8 @@ public class UserRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final Logger log = LoggerFactory.getLogger(UserRepository.class);
+
     @Transactional
     public Optional<User> getUser(String name) {
         try {
@@ -26,7 +30,7 @@ public class UserRepository {
                     .getSingleResult();
             return Optional.ofNullable(singleUser);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            log.error(e.getClass()+" : "+e.getMessage());
         }
         return Optional.empty();
     }

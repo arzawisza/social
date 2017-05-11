@@ -17,6 +17,9 @@ import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -40,6 +43,8 @@ public class SocialController {
     private PostsToRestEntityConverter postsToRest;
     @Autowired
     private RequestValidationErrorConverter validationErrorConverter;
+
+    private final Logger log = LoggerFactory.getLogger(SocialController.class);
 
     @PostMapping(path = "/user/{userName}/posts", produces = {APPLICATION_JSON_VALUE}, consumes = {APPLICATION_JSON_VALUE})
     @ApiResponses(value = {@ApiResponse(code = 201, message = "New user created")})
@@ -77,15 +82,18 @@ public class SocialController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ApplicationError processNoResultException(NoResultException ex) {
-        return new ApplicationError().withCode(NOT_FOUND.name()).withMessage("User not found");
+        ApplicationError applicationError = new ApplicationError().withCode(NOT_FOUND.name()).withMessage("User not found");
+        log.error(applicationError.toString());
+        return applicationError;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ApplicationError processValidationError(MethodArgumentNotValidException ex) {
-        ApplicationError dto = validationErrorConverter.convert(ex);
-        return dto;
+        ApplicationError error = validationErrorConverter.convert(ex);
+        log.error(error.toString());
+        return error;
     }
 
 
@@ -94,9 +102,10 @@ public class SocialController {
     @ResponseBody
     public ApplicationError processUserNameNotValidException(UserNameNotValidException ex) {
 
-        ApplicationError dto = new ApplicationError()
+        ApplicationError error = new ApplicationError()
                 .withMessage("Invalid user name: " + ex.getUserName())
                 .withCode(HttpStatus.BAD_REQUEST.name());
-        return dto;
+        log.error(error.toString());
+        return error;
     }
 }
