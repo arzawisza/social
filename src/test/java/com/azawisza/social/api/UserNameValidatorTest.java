@@ -14,40 +14,40 @@ public class UserNameValidatorTest {
     @Test(expected = UserNameNotValidException.class)
     public void shouldValidateBlank() {
         //given
-        validator.validate("");
         //when
+        validator.validate("");
         //then
     }
 
     @Test(expected = UserNameNotValidException.class)
     public void shouldValidateNull() {
         //given
-        validator.validate(null);
         //when
+        validator.validate(null);
         //then
     }
 
     @Test(expected = UserNameNotValidException.class)
     public void shouldValidateCapitalLetters() {
         //given
-        validator.validate("ABCD");
         //when
+        validator.validate("ABCD");
         //then
     }
 
     @Test(expected = UserNameNotValidException.class)
     public void shouldValidateCapitalMaxLength() {
         //given
-        validator.validate(tooLongTitle);
         //when
+        validator.validate(tooLongTitle);
         //then
     }
 
     @Test(expected = UserNameNotValidException.class)
     public void shouldValidateCapitalMinLength() {
         //given
-        validator.validate("ab");
         //when
+        validator.validate("ab");
         //then
     }
 
