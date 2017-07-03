@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -29,6 +31,11 @@ public class PostsToRestEntityConverter {
     }
 
     public ResponseEntity<GetPostsRS> convertUserPosts(Optional<List<PostDTO>> userPosts) {
+
+        Stream.of(1,2,3)
+                .flatMap(e -> Stream.of(""+e,""+(1+e)))
+                .collect(Collectors.toList());
+
         ResponseEntity<GetPostsRS> response = userPosts
                 .map(postDTOS -> new ResponseEntity<>(
                         new GetPostsRS().withPosts(postDTOS), OK))
